@@ -1,0 +1,5 @@
+{
+  "server": 8000,
+  "gpt_url": "https://openai-proxy-api.pages.dev/api/v1/chat/completions",
+  "gpt_token": ""
+}

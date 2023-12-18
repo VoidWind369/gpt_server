@@ -1,0 +1,29 @@
+[package]
+name = "gpt_server"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "*"
+
+[dependencies.tokio]
+version = "*"
+features = ["full"]
+
+[dependencies.serde]
+version = "*"
+features = ["derive"]
+
+[dependencies.serde_json]
+version = "*"
+features = ["default"]
+
+[dependencies.reqwest]
+version = "*"
+features = ["json"]
+
+[dependencies.chrono]
+version = "*"
+features = ["default"]
