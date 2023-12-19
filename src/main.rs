@@ -1,5 +1,5 @@
 use axum::{Json, Router};
-use axum::http::{header, HeaderName, StatusCode};
+use axum::http::{header, StatusCode};
 use axum::response::{AppendHeaders, IntoResponse};
 use axum::routing::{get, post};
 
@@ -9,7 +9,7 @@ mod log;
 mod config;
 mod gpt_api;
 
-async fn chat(Json(data): Json<Message>) -> (StatusCode, AppendHeaders<[(HeaderName, &'static str); 4]>, Json<String>) {
+async fn chat(Json(data): Json<Message>) -> impl IntoResponse {
     log_info!("提问: {}", data.msg);
     let gpt_res = gpt_api::new(data.msg).await;
     let headers = AppendHeaders([
