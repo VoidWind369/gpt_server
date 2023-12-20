@@ -27,3 +27,7 @@ features = ["json"]
 [dependencies.chrono]
 version = "*"
 features = ["default"]
+
+[dependencies.lettre]
+version = "0.11.2"
+features = ["default"]

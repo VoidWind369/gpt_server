@@ -8,6 +8,7 @@ use crate::gpt_api::Message;
 mod log;
 mod config;
 mod gpt_api;
+mod email;
 
 async fn chat(Json(data): Json<Message>) -> impl IntoResponse {
     log_info!("提问: {}", data.msg);
@@ -19,6 +20,17 @@ async fn chat(Json(data): Json<Message>) -> impl IntoResponse {
         (header::ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"),
     ]);
     (StatusCode::default(), headers, Json::from(gpt_res))
+}
+
+async fn send_email() -> impl IntoResponse {
+    let send = email::send();
+    let headers = AppendHeaders([
+        (header::CONTENT_TYPE, "application/json"),
+        (header::ACCESS_CONTROL_ALLOW_ORIGIN, "*"),
+        (header::ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, OPTIONS, DELETE"),
+        (header::ACCESS_CONTROL_ALLOW_CREDENTIALS, "true"),
+    ]);
+    (headers, send)
 }
 
 async fn handler_404() -> impl IntoResponse {
@@ -37,6 +49,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(|| async { "This is an Void Web by Mu_zi_xi" }))
         .route("/chat", post(chat))
+        .route("/send", get(send_email))
         .fallback(handler_404);
 
     // 启动服务
